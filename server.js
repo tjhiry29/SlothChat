@@ -4,12 +4,10 @@ let path         = require('path');
 let express      = require('express');
 let cookieParser = require('cookie-parser');
 let bodyParser   = require('body-parser');
-let loki         = require('lokijs');
 let routes       = require('./routes');
-let io 			 = require('socketio');
+let io 			 = require('socket.io');
 
 //setup
-let database = new loki('database.loki', { autoload: true, autosave: true });
 let app      = express();
 
 //settings
@@ -22,9 +20,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('/public', express.static('public'));
-
-//loki db reference for the router
-app.use((req, res, next) => { req.database = database; next(); });
 
 //router
 routes.create(app);
