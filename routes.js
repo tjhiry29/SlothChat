@@ -2,8 +2,6 @@
 
 function create(app) {
     app.use('/',         require('./routes/default'));
-    app.use('/about',    require('./routes/about'));
-    app.use('/database', require('./routes/database'));
 
     app.use((req, res, next) => {
         res.status(404);

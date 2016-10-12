@@ -6,7 +6,7 @@ let cookieParser = require('cookie-parser');
 let bodyParser   = require('body-parser');
 let loki         = require('lokijs');
 let routes       = require('./routes');
-
+let io 			 = require('socketio');
 
 //setup
 let database = new loki('database.loki', { autoload: true, autosave: true });
