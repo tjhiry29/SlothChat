@@ -1,4 +1,16 @@
 extends template
 
 block content
-    p hello
+	div.container-fluid
+		div.row
+			div.col-md-3
+				div.users
+			div.col-md-9
+				div.container-fluid.message-display
+					div.message-container
+
+				div.container-fluid.user-input
+					div.row
+						form#message_form
+							input#message(type="text", name="message")
+							input#message_submit.btn.btn-info(type="submit", value="submit")

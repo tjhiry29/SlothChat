@@ -8,7 +8,7 @@ let routes       = require('./routes');
 let io 			 = require('socket.io');
 
 //setup
-let app      = express();
+let app      	 = express();
 
 //settings
 app.set('port', process.env.PORT || 3000);
@@ -25,4 +25,20 @@ app.use('/public', express.static('public'));
 routes.create(app);
 
 //server
-app.listen(app.get('port'), () => console.log('Listening on http://localhost:' + app.get('port')));
+let server = app.listen(app.get('port'), () => console.log('Listening on http://localhost:' + app.get('port')));
+let socket = io.listen(server);
+var current_user_id = 0;
+
+socket.on('connection', function(client){
+	console.log("User has connected");
+
+	client.on('disconnect', function(){
+		console.log("A user has disconnected");
+	});
+
+	client.on('new message', function(message){
+		// client.newMessage(message);
+		socket.emit('new message', message);
+		console.log("new message: " + message);
+	});
+});
