@@ -33,7 +33,8 @@ socket.on('new message', function(message) {
 
 $("#message_form").submit(function(){
 	var text = $('#message').val();
-	if(text.length == 0){
+	if(text.length == 0 || text == "\n" || text == ''){
+		$('#message').val('');
 		return false;
 	}
 	message = {text: text, user_id: user_id}
