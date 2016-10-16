@@ -5,10 +5,14 @@ let express      = require('express');
 let cookieParser = require('cookie-parser');
 let bodyParser   = require('body-parser');
 let routes       = require('./routes');
+let socketConfig = require('./socketConfig');
 let io 			 = require('socket.io');
+let marked 		 = require('marked');
+let loki		 = require('lokijs');
 
 //setup
 let app      	 = express();
+let db			 = new loki('database.loki', { autoload: true, autosave: true});
 
 //settings
 app.set('port', process.env.PORT || 3000);
@@ -24,21 +28,8 @@ app.use('/public', express.static('public'));
 //router
 routes.create(app);
 
-//server
+//server and socket
 let server = app.listen(app.get('port'), () => console.log('Listening on http://localhost:' + app.get('port')));
 let socket = io.listen(server);
-var current_user_id = 0;
+socketConfig.use(socket, db);
 
-socket.on('connection', function(client){
-	console.log("User has connected");
-
-	client.on('disconnect', function(){
-		console.log("A user has disconnected");
-	});
-
-	client.on('new message', function(message){
-		// client.newMessage(message);
-		socket.emit('new message', message);
-		console.log("new message: " + message);
-	});
-});

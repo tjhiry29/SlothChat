@@ -109,7 +109,7 @@ button:hover {
 }
 
 .message {
-    padding: 2px 5px 2px 5px;
+    padding: 2px 5px 0px 5px;
     margin: 2px;
     background-color: white;
     border-style: solid;
@@ -126,6 +126,10 @@ button:hover {
 .message.user-message {
     clear: both;
     float: right;
+}
+
+.message p {
+    margin-bottom: 0px;
 }
 
 #message_form {
@@ -146,7 +150,13 @@ button:hover {
     border-style: solid;
     border-color: black;
     border-width: 1px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
 #message_submit {
     width: 25%;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 }

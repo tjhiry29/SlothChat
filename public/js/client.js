@@ -1,17 +1,38 @@
 var socket = io();
+var user_id = 0;
+
+socket.on('hello', function(){
+	//receive hello and force user to log-in/register
+	//send user info.
+});
+
+socket.on('authenticated', function(session){
+	//set up views and stuff, cache/save session.
+	//socket.emit('request users', session.token);
+});
+
+socket.on('authentication failed', function(error){
+	//show appropriate error.
+});
+
+socket.on('new message', function(message) {
+	if(message.user_id == user_id){
+		return;
+	}
+	$(".message-container").append("<div class='message'>" + marked(message) + "</div>")
+});
 
 $("#message_form").submit(function(){
-	var message = $('#message').val();
-	if(message.length == 0){
+	var text = $('#message').val();
+	if(text.length == 0){
 		return false;
 	}
+	message = {text: text, user_id: user_id}
 	socket.emit('new message', message);
 	$("#message").val('');
-	$(".message-container").append("<div class='message user-message'>" + message + "</div>");
+	$(".message-container").append("<div class='message user-message'>" + marked(text) + "</div>");
 	return false;
 });
 
-socket.on('user connected', function(user){
-	$('.users').append("<p class='user'>" + user + "</p>");
-	console.log('connected');
-});
+//login form.submit
+//socket.emit('authenticate', user);
