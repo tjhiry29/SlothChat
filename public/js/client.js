@@ -28,7 +28,7 @@ socket.on('new message', function(message) {
 	if(message.user_id == user_id){
 		return;
 	}
-	$(".message-container").append("<div class='message'>" + marked(message) + "</div>")
+	postMessage(message.text);
 });
 
 $("#message_form").submit(function(){
@@ -38,8 +38,7 @@ $("#message_form").submit(function(){
 	}
 	message = {text: text, user_id: user_id}
 	socket.emit('new message', message);
-	$("#message").val('');
-	$(".message-container").append("<div class='message user-message'>" + marked(text) + "</div>");
+	postUserMessage(text);
 	return false;
 });
 

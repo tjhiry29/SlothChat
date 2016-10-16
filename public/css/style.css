@@ -152,6 +152,7 @@ button:hover {
     border-width: 1px;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
+    word-break: break-word;
 }
 #message_submit {
     width: 25%;
