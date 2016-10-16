@@ -146,21 +146,25 @@ textarea{
     height: 25%;
 }
 
-#message_form input textarea {
+#message_form input textarea { 
     display: inline-block;
 }
 
 #message {
     width: 75%;
+    vertical-align: top;
     border-style: solid;
     border-color: black;
     border-width: 1px;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
     word-break: break-word;
+    height: 100%;
 }
 #message_submit {
+    vertical-align: top;
     width: 25%;
+    height: 100%;
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
     border-top-right-radius: 5px;
