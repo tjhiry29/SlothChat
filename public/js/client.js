@@ -1,18 +1,27 @@
 var socket = io();
-var user_id = 0;
+var user_id = 0,
+	session = null;
 
-socket.on('hello', function(){
+socket.on('hello', function() {
 	//receive hello and force user to log-in/register
+
+	//hide message interface.
+	//show registration interface.
+
 	//send user info.
 });
 
-socket.on('authenticated', function(session){
+socket.on('authenticated', function(session) {
 	//set up views and stuff, cache/save session.
 	//socket.emit('request users', session.token);
 });
 
-socket.on('authentication failed', function(error){
+socket.on('authentication failed', function(error) {
 	//show appropriate error.
+});
+
+socket.on('update user list', function(){
+	//socket.emit('request users', session.token);
 });
 
 socket.on('new message', function(message) {
