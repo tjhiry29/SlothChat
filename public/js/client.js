@@ -3,25 +3,21 @@ var user_id = 0,
 	session = null;
 
 socket.on('hello', function() {
-	//receive hello and force user to log-in/register
-
-	//hide message interface.
-	//show registration interface.
-
-	//send user info.
+	presentLogIn();
 });
 
-socket.on('authenticated', function(session) {
+socket.on('authenticated', function(new_session) {
 	//set up views and stuff, cache/save session.
-	//socket.emit('request users', session.token);
+	sesssion = new_session
+	presentChat();
 });
 
 socket.on('authentication failed', function(error) {
 	//show appropriate error.
 });
 
-socket.on('update user list', function(){
-	//socket.emit('request users', session.token);
+socket.on('update user list', function() {
+	socket.emit('request users', session.token);
 });
 
 socket.on('new message', function(message) {
@@ -32,7 +28,7 @@ socket.on('new message', function(message) {
 });
 
 //Not sure if this is belongs here or in default.js
-$("#message_form").submit(function(){
+$("#message-form").submit(function() {
 	var text = $('#message').val();
 	if(text.length == 0 || text == "\n" || text == ''){
 		$('#message').val('');
@@ -44,5 +40,14 @@ $("#message_form").submit(function(){
 	return false;
 });
 
-//login form.submit
-//socket.emit('authenticate', user);
+$("#login-form").submit(function() {
+	//TODO: clean nickname.
+	var nickname = $("#nickname").val();
+	if(nickname.length == 0) {
+		return false;
+	}
+	hideError(); //If there are any errors, remove them.
+	$("#nickname").val('');
+	socket.emit('authenticate', nickname);
+	return false;
+});

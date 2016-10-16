@@ -103,8 +103,45 @@ textarea{
     float: center;
 }
 
+/* Error */
+#error {
+    color: red;
+}
+
+/* Login */
+.login-modal {
+    text-align: center;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+    vertical-align: center;
+    padding: 25px;
+    height: 500px;
+    position: relative;
+}
+
+#nickname {
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+    width: 200px;
+    margin: auto;
+    vertical-align: center;
+}
+
+#login-form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.login-label {
+
+}
+
 /* Messaging */
-.message-display{
+.message-display {
     height: 500px;
     overflow: scroll;
     background-color: #eee;
@@ -146,7 +183,7 @@ textarea{
     height: 25%;
 }
 
-#message_form input textarea { 
+#message-form input textarea { 
     display: inline-block;
 }
 
@@ -161,7 +198,7 @@ textarea{
     word-break: break-word;
     height: 100%;
 }
-#message_submit {
+#message-submit {
     vertical-align: top;
     width: 25%;
     height: 100%;

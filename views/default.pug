@@ -2,7 +2,13 @@ extends template
 
 block content
 	div.container-fluid
-		div.row
+		div.row#login
+			div.login-modal
+				h1.login-label Basically Twitch Chat
+				form#login-form
+					p.login-label(name="nickname") Please enter a nickname: 
+					input#nickname(type="text", name="nickname")
+		div.row#chat
 			div.col-md-3.col-sm-3.col-lg-3
 				div.users
 			div.col-md-9.col-sm-9.col-lg-9
@@ -11,6 +17,6 @@ block content
 
 				div.container-fluid.user-input
 					div.row
-						form#message_form(autocomplete="off")
+						form#message-form(autocomplete="off")
 							textarea#message(type="text", name="message", rows="2", cols="60")
-							input#message_submit.btn.btn-info(type="submit", value="Submit")
+							input#message-submit.btn.btn-info(type="submit", value="Submit")
