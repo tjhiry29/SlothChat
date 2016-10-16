@@ -67,7 +67,8 @@ function use(socket, db) {
 		});
 
 		client.on('new message', function(message) {
-			message = {text: message.text, id: message_id++, user_id: message.user_id}
+			//Assign a message id
+			message = {text: message.text, id: message_id++, user_id: message.user_id, nickname: message.nickname}
 			socket.emit('new message', message);
 			console.log("new message: %j", message);
 		});

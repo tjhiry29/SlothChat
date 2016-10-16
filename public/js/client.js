@@ -34,7 +34,7 @@ $("#message-form").submit(function() {
 		$('#message').val('');
 		return false;
 	}
-	message = {text: text, user_id: user_id}
+	message = {text: text, user_id: user_id, nickname: session.nickname}
 	socket.emit('new message', message);
 	postUserMessage(text);
 	return false;
