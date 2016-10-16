@@ -8,7 +8,7 @@ See [Markdown cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-
 *Setup and Installation
 
 1. Install [node](https://nodejs.org/en/) and [npm](https://www.npmjs.com/)
-2. Clone to any directory. `git clone git@github.com/tjhiry29/BasicallyTwitchChat.git`
+2. Clone to any directory. `git clone git@github.com:tjhiry29/BasicallyTwitchChat.git`
 3. `npm install && npm start`
 4. Use `npm start` at any point afterwards to run the development environment.
 
