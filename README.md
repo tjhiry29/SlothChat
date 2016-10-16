@@ -1,4 +1,4 @@
-*Basically Twitch Chat
+*Basically Twitch Chat*
 
 It's not really that close to twitch chat, it's just a basic chatting application.
 
