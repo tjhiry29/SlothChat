@@ -12,8 +12,18 @@ See [Markdown cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-
 3. `npm install && npm start`
 4. Use `npm start` at any point afterwards to run the development environment.
 
-This project is completely open source.
-No license at the moment. Please contact tjhiry29@gmail.com for any inquiries.
+This project is completely open source and there is no license at the moment. 
+
+Please contact tjhiry29@gmail.com for any inquiries.
+
+**Upcoming and Potential Features**
+
+1. Nickname registration
+2. Channels
+3. Move to MySQL DB (Not a feature, but it'll allow for more features)
+4. Proper registration
+
+Emojis are coming at some point.
 
 **Contributing**
 

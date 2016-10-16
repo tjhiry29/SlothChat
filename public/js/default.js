@@ -1,4 +1,5 @@
 //Front end Javascript
+
 $(document).ready(function() {
 	$("#message").keypress(function(e) {
 		if(e.which == 13 && !e.shiftKey){
@@ -19,9 +20,13 @@ function presentChat(){
 
 function postUserMessage(text) { 
 	$("#message").val('');
-	$(".message-container").append("<div class='message user-message'>" + marked(text) + "</div>");
+	$("<div>", {
+		class: "message user-message"
+	}).append(marked(text)).appendTo(".message-container");
 }
 
 function postMessage(text) {
-	$(".message-container").append("<div class='message'>" + marked(message) + "</div>")
+	$("<div>", {
+		class: "message"
+	}).append(marked(text)).appendTo(".message-container");
 }

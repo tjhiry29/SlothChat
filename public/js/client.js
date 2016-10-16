@@ -31,6 +31,7 @@ socket.on('new message', function(message) {
 	postMessage(message.text);
 });
 
+//Not sure if this is belongs here or in default.js
 $("#message_form").submit(function(){
 	var text = $('#message').val();
 	if(text.length == 0 || text == "\n" || text == ''){
