@@ -5,13 +5,14 @@ block content
 		div.row#login
 			div.login-modal
 				h1.login-label Basically Twitch Chat
-				form#login-form
+				form#login-form(autocomplete="off")
 					p.login-label(name="nickname") Please enter a nickname: 
 					input#nickname(type="text", name="nickname")
 		div.row#chat
-			div.col-md-3.col-sm-3.col-lg-3
+			div.col-md-3.col-sm-3.col-lg-3.col-xs-3
+				h3 Users:
 				div.users
-			div.col-md-9.col-sm-9.col-lg-9
+			div.col-md-9.col-sm-9.col-lg-9.col-xs-9
 				div.container-fluid.message-display
 					div.message-container
 
@@ -19,4 +20,4 @@ block content
 					div.row
 						form#message-form(autocomplete="off")
 							textarea#message(type="text", name="message", rows="2", cols="60")
-							input#message-submit.btn.btn-info(type="submit", value="Submit")
+							input#message-submit.btn.btn-info(value="Submit", type="button")

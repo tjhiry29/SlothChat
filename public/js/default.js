@@ -1,10 +1,23 @@
 //Front end Javascript
+var chat = null,
+	login = null,
+	errors = null,
+	message = null,
+	message_container = null,
+	message_form = null;
 
 $(document).ready(function() {
+	chat = $("#chat");
+	login = $("#login");
+	errors = $("#error");
+	message = $("#message");
+	message_container = $(".message-container");
+	message_form = $("#message-form");
+
 	//When enter is pressed without any other key send a message.
-	$("#message").keypress(function(e) {
+	message.keypress(function(e) {
 		if(e.which == 13 && !e.shiftKey){
-			$("#message-form").submit();
+			message_form.submit();
 			e.preventDefault();
 			return false;
 		}
@@ -14,7 +27,7 @@ $(document).ready(function() {
 function presentError(error) {
 	$("<div>", {
 		class: "error",
-	}).append(marked(error)).appendTo($("#error"));
+	}).append(marked(error)).appendTo(errors);
 }
 
 function hideError() {
@@ -22,24 +35,38 @@ function hideError() {
 }	
 
 function presentLogIn() {
-	$("#chat").hide();
-	$("#login").show();
+	chat.hide();
+	login.show();
 }
 
 function presentChat() {
-	$("#chat").show();
-	$("#login").hide();
+	chat.show();
+	login.hide();
 }
 
-function postUserMessage(text) { 
+function clearUserList() {
+	var children = $(".users").children();
+	if(children == null || children.length == 0) {
+		return;
+	}
+	children.remove();
+}
+
+function addUserToList(session_to_add) {
+	$("<p>", {
+		class: 'user'
+	}).text(session_to_add.nickname).appendTo($(".users"));
+}
+
+function postUserMessage(message) { 
 	$("#message").val('');
 	$("<div>", {
-		class: "message user-message"
-	}).append(marked(text)).appendTo(".message-container");
+		class: "message"
+	}).append("<p class='message-from'>"+message.nickname+":</p>").append(marked(message.text)).appendTo(message_container);
 }
 
-function postMessage(text) {
+function postMessage(message) {
 	$("<div>", {
 		class: "message"
-	}).append(marked(text)).appendTo(".message-container");
+	}).append("<p class='message-from'>"+message.nickname+":</p>").append(marked(message.text)).appendTo(message_container);
 }

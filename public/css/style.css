@@ -136,10 +136,6 @@ textarea{
     transform: translate(-50%, -50%);
 }
 
-.login-label {
-
-}
-
 /* Messaging */
 .message-display {
     height: 500px;
@@ -147,17 +143,13 @@ textarea{
     background-color: #eee;
 }
 
-.message-container {
-}
-
 .message {
     padding: 2px 5px 0px 5px;
     margin: 2px;
     background-color: white;
     border-style: solid;
-    border-color: black;
+    border-color: #d3d3d3;
     border-width: 1px;
-    border-radius: 5px;
     word-wrap: break-word;
     max-width: 50%;
     display: inline-block;
@@ -165,9 +157,10 @@ textarea{
     float: left;
 }
 
-.message.user-message {
-    clear: both;
-    float: right;
+.message-from {
+    text-align: left;
+    color: black;
+    font-weight: bold;
 }
 
 .message p {

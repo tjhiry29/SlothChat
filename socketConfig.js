@@ -31,36 +31,40 @@ function use(socket, db) {
 	socket.on('connection', function(client) {
 		active_users.push(client.client.conn.id);
 		console.log("User has connected: " + client.client.conn.id);
-		socket.emit('hello');
+		socket.to(client.id).emit('hello');
 
 		client.on('authenticate', function(nickname) {
 			//check db for user nickname.
 			var same_nicknames = sessions.find({nickname: nickname});
 			if(same_nicknames.length > 0){
-				socket.emit('authentication failed', "A user already has this nickname, please choose another");
+				socket.to(client.id).emit('authentication failed', "A user already has this nickname, please choose another");
 			}
-			else { //Must be valid
+			else { //Must be valid at this point.
 				var session = createSession(client.client.conn.id, nickname);
 				saveSession(session);
-				socket.emit('authenticated', session);
+				socket.to(client.id).emit('authenticated', session);
 				socket.emit('new message', newUserMessage(nickname));
+				socket.emit('update user list');
 			}
 		});
 
 		client.on('request users', function(token) {
 			//return list of active users.
-			//socket.emit('active users', active_users);
+			if(tokens.indexOf(token) == -1) {
+				return;
+			}
+			socket.emit('user list', sessions.data)
 		});
 
 		client.on('disconnect', function() {
 			var index = active_users.indexOf(client.client.conn.id);
-			if(index != -1){
+			if(index != -1) {
 				active_users.slice(index, 1);
 			}
 			var session_to_remove = sessions.find({id: client.client.conn.id})
 			sessions.remove(session_to_remove);
 			index = tokens.indexOf(session_to_remove.token);
-			if(index != -1){
+			if(index != -1) {
 				tokens.slice(index, 1);
 			}
 			console.log("A user has disconnected");
@@ -80,13 +84,15 @@ function setUpDB(db) {
 }
 
 function newUserMessage(nickname) {
-	var message = {text: ("User %s has connected", nickname), id: message_id++, user_id: server_id}
+	var message = {text: ("User '" + nickname + "' has connected."), id: message_id++, user_id: server_id, nickname: "Server"}
+	return message;
 }
 
 function generateToken(client_id, nickname) {
 	var token = sha256(client_id + nickname);
 	tokens.push(token);
 	// KEEP THE TOKEN
+	return token;
 }
 
 function createSession(client_id, nickname){

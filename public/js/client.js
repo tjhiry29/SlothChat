@@ -8,35 +8,48 @@ socket.on('hello', function() {
 
 socket.on('authenticated', function(new_session) {
 	//set up views and stuff, cache/save session.
-	sesssion = new_session
+	session = new_session
 	presentChat();
 });
 
 socket.on('authentication failed', function(error) {
 	//show appropriate error.
+	presentError(error);
 });
 
 socket.on('update user list', function() {
 	socket.emit('request users', session.token);
 });
 
+socket.on('user list', function(sessions) {
+	clearUserList();
+	sessions.forEach(function(session_to_add){
+		addUserToList(session_to_add);
+	});
+});
+
 socket.on('new message', function(message) {
-	if(message.user_id == user_id){
+	if(message.user_id == session.user_id){
 		return;
 	}
-	postMessage(message.text);
+	postMessage(message);
 });
 
 //Not sure if this is belongs here or in default.js
 $("#message-form").submit(function() {
 	var text = $('#message').val();
-	if(text.length == 0 || text == "\n" || text == ''){
+	if(text.length == 0 || text == ''){
 		$('#message').val('');
 		return false;
 	}
-	message = {text: text, user_id: user_id, nickname: session.nickname}
+	message = {text: text, user_id: session.user_id, nickname: session.nickname}
 	socket.emit('new message', message);
-	postUserMessage(text);
+	postUserMessage(message);
+	return false;
+});
+
+$("#message-submit").on('click', function(){
+	$("#message-form").submit();
 	return false;
 });
 
