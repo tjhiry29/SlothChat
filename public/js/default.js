@@ -13,7 +13,6 @@ $(document).ready(function() {
 	message = $("#message");
 	message_container = $(".message-container");
 	message_form = $("#message-form");
-
 	//When enter is pressed without any other key send a message.
 	message.keypress(function(e) {
 		if(e.which == 13 && !e.shiftKey){
@@ -63,10 +62,12 @@ function postUserMessage(message) {
 	$("<div>", {
 		class: "message"
 	}).append("<p class='message-from'>"+message.nickname+":</p>").append(marked(message.text)).appendTo(message_container);
+	$(".message-display").scrollTop($(".message-display")[0].scrollHeight)
 }
 
 function postMessage(message) {
 	$("<div>", {
 		class: "message"
 	}).append("<p class='message-from'>"+message.nickname+":</p>").append(marked(message.text)).appendTo(message_container);
+	$(".message-display").scrollTop($(".message-display")[0].scrollHeight)
 }
