@@ -67,6 +67,8 @@ function use(socket, db) {
 			if(index != -1) {
 				tokens.slice(index, 1);
 			}
+			socket.emit('update users list');
+			socket.emit('new message', userDisconnectedMessage(session_to_remove.nickname))
 			console.log("A user has disconnected");
 		});
 
@@ -84,6 +86,11 @@ function setUpDB(db) {
 }
 
 function newUserMessage(nickname) {
+	var message = {text: ("User '" + nickname + "' has connected."), id: message_id++, user_id: server_id, nickname: "Server"}
+	return message;
+}
+
+function userDisconnectedMessage(nickname) {
 	var message = {text: ("User '" + nickname + "' has connected."), id: message_id++, user_id: server_id, nickname: "Server"}
 	return message;
 }

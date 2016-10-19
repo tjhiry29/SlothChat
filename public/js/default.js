@@ -17,7 +17,7 @@ $(document).ready(function() {
 	message.keypress(function(e) {
 		if(e.which == 13 && !e.shiftKey){
 			message_form.submit();
-			e.preventDefault();
+			e.preventDefault(); //Don't let it create a new line.
 			return false;
 		}
 	});
