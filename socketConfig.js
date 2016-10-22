@@ -19,10 +19,8 @@ var message_id = 0,
 	user_id = 0,
 	channel_id = 1,
 	server_id = 13371337,
-	active_users = [],
 	db = null,
 	sessions = null,
-	tokens = [],
 	channels = null,
 	default_channel = 0,
 	messages = null;
@@ -33,7 +31,6 @@ function use(socket, db) {
 	//db setup
 	setUpDB(db);
 	socket.on('connection', function(client) {
-		active_users.push(client.id);
 		console.log("User has connected: " + client.id);
 		socket.to(client.id).emit('hello');
 
@@ -62,16 +59,8 @@ function use(socket, db) {
 		});
 
 		client.on('disconnect', function() {
-			var index = active_users.indexOf(client.id);
-			if(index != -1) {
-				active_users.slice(index, 1);
-			}
 			var session_to_remove = sessions.find({id: client.id})[0];
 			sessions.remove(session_to_remove);
-			index = tokens.indexOf(session_to_remove.token);
-			if(index != -1) {
-				tokens.slice(index, 1);
-			}
 			socket.to(session_to_remove.channel_id).emit('update user list');
 			socket.to(session_to_remove.channel_id).emit('new message', userDisconnectedMessage(session_to_remove.nickname, session_to_remove.channel_id))
 			console.log("A user has disconnected %j", session_to_remove);
@@ -135,17 +124,9 @@ function channelJoinedMessage(channel_id){
 	return message;
 }
 
-function generateToken(client_id, nickname) {
-	var token = sha256(client_id + nickname);
-	tokens.push(token);
-	// KEEP THE TOKEN
-	return token;
-}
-
 function createSession(client_id, nickname){
 	var session = {
 		id: client_id, 
-		token: generateToken(client_id, nickname),
 		user_id: user_id++,
 		nickname: nickname,
 		channel_id: 0
