@@ -32,4 +32,3 @@ routes.create(app);
 let server = app.listen(app.get('port'), () => console.log('Listening on http://localhost:' + app.get('port')));
 let socket = io.listen(server);
 socketConfig.use(socket, db);
-
