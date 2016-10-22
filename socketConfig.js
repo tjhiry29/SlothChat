@@ -66,13 +66,13 @@ function use(socket, db) {
 			if(index != -1) {
 				active_users.slice(index, 1);
 			}
-			var session_to_remove = sessions.find({id: client.id})
+			var session_to_remove = sessions.find({id: client.id})[0];
 			sessions.remove(session_to_remove);
 			index = tokens.indexOf(session_to_remove.token);
 			if(index != -1) {
 				tokens.slice(index, 1);
 			}
-			socket.to(session_to_remove.channel_id).emit('update users list');
+			socket.to(session_to_remove.channel_id).emit('update user list');
 			socket.to(session_to_remove.channel_id).emit('new message', userDisconnectedMessage(session_to_remove.nickname, session_to_remove.channel_id))
 			console.log("A user has disconnected %j", session_to_remove);
 		});
@@ -125,7 +125,7 @@ function newUserMessage(nickname, channel_id) {
 }
 
 function userDisconnectedMessage(nickname, channel_id) {
-	var message = {text: ("User '" + nickname + "' has connected."), id: message_id++, user_id: server_id, nickname: "Server", channel_id: channel_id}
+	var message = {text: ("User '" + nickname + "' has disconnected."), id: message_id++, user_id: server_id, nickname: "Server", channel_id: channel_id}
 	saveMessage(message);
 	return message;
 }

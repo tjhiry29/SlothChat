@@ -30,9 +30,9 @@ socket.on('update user list', function() {
 
 socket.on('user list', function(sessions) {
 	clearUserList();
+	users = sessions;
 	sessions.forEach(function(session_to_add){
 		addUserToList(session_to_add);
-		users.push(session_to_add);
 	});
 });
 
