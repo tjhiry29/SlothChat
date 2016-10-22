@@ -74,7 +74,7 @@ function use(socket, db) {
 			}
 			socket.to(session_to_remove.channel_id).emit('update users list');
 			socket.to(session_to_remove.channel_id).emit('new message', userDisconnectedMessage(session_to_remove.nickname, session_to_remove.channel_id))
-			console.log("A user has disconnected");
+			console.log("A user has disconnected %j", session_to_remove);
 		});
 
 		client.on('new message', function(message) {
