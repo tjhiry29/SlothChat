@@ -1,8 +1,8 @@
-var socket = io();
-var user_id = 0,
-	session = null;
-var messages = [];
-var users = [];
+var socket = io(),
+	user_id = 0,
+	session = null,
+	messages = [],
+	users = [];
 
 socket.on('hello', function() {
 	presentLogIn();
