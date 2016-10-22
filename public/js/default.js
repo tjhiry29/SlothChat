@@ -51,6 +51,14 @@ function clearUserList() {
 	children.remove();
 }
 
+function clearMessages(){
+	var children = message_container.children();
+	if(children == null || children.length == 0){
+		return;
+	}
+	children.remove();
+}
+
 function addUserToList(session_to_add) {
 	$("<p>", {
 		class: 'user'

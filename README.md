@@ -14,11 +14,9 @@ See [Markdown cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-
 
 This project is completely open source and there is no license at the moment. 
 
-Please contact tjhiry29@gmail.com for any inquiries.
-
 **Upcoming and Potential Features**
 
-1. Nickname registration
+-1. Nickname registration-
 2. Channels
 3. Move to MySQL DB (Not a feature, but it'll allow for more features)
 4. Proper registration	

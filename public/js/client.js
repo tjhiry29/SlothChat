@@ -1,6 +1,8 @@
 var socket = io();
 var user_id = 0,
 	session = null;
+var messages = [];
+var users = [];
 
 socket.on('hello', function() {
 	presentLogIn();
@@ -8,8 +10,9 @@ socket.on('hello', function() {
 
 socket.on('authenticated', function(new_session) {
 	//set up views and stuff, cache/save session.
-	session = new_session
+	session = new_session;
 	presentChat();
+	socket.emit('request messages', session);
 });
 
 socket.on('authentication failed', function(error) {
@@ -17,22 +20,40 @@ socket.on('authentication failed', function(error) {
 	presentError(error);
 });
 
+socket.on('error', function(error){
+	presentError(error);
+});
+
 socket.on('update user list', function() {
-	socket.emit('request users', session.token);
+	socket.emit('request users', session.channel_id);
 });
 
 socket.on('user list', function(sessions) {
 	clearUserList();
 	sessions.forEach(function(session_to_add){
 		addUserToList(session_to_add);
+		users.push(session_to_add);
 	});
 });
 
 socket.on('new message', function(message) {
+	messages.push(message);
 	if(message.user_id == session.user_id){
 		return;
 	}
 	postMessage(message);
+});
+
+socket.on('update messages', function(messages_to_add){
+	clearMessages();
+	messages = messages_to_add.reverse();
+	messages.forEach(function(message_to_add){
+		postMessage(message_to_add);
+	});
+});
+
+socket.on('update session', function(new_session){
+	session = new_session;
 });
 
 //SOME UI HANDLING
@@ -43,7 +64,7 @@ $("#message-form").submit(function() {
 		$('#message').val('');
 		return false;
 	}
-	message = {text: text, user_id: session.user_id, nickname: session.nickname}
+	message = {text: text, user_id: session.user_id, nickname: session.nickname, channel_id: session.channel_id}
 	socket.emit('new message', message);
 	postUserMessage(message);
 	return false;
