@@ -1,5 +1,5 @@
 {
-  "name": "LEAN",
+  "name": "SlothChat",
   "version": "1.0.0",
   "scripts": {
     "start": "node --harmony ./server.js"

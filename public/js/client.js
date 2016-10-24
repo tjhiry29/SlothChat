@@ -5,7 +5,9 @@ var socket = io(),
 	users = [];
 
 socket.on('hello', function() {
-	presentLogIn();
+	if($("#login") != null || $("#login").length != 0) {
+		presentLogIn();
+	}
 });
 
 socket.on('authenticated', function(new_session) {

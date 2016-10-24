@@ -10,8 +10,9 @@ html(lang='en')
         script(src='/public/lib/jquery-3.0.0.min.js')
         script(src='/public/lib/alertify.min.js')
         script(src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js")
-        each script in scripts
-            script(src=script)
+        if scripts != null
+            each script in scripts
+                script(src=script)
 
     body
         header
@@ -19,8 +20,8 @@ html(lang='en')
                 ul
                     li
                         a(href='/') HOME
-                    //li
-                        a(href='/about') ABOUT
+                    li
+                        a(href='https://github.com/tjhiry29/SlothChat', target="blank") ABOUT
         div#error
         div#content-body.container-fluid
             block content
