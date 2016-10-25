@@ -85,5 +85,13 @@ function postMessage(message) {
 function dateString(time){
 	var date = new Date();
 	date.setTime(time);
-	return date.getHours() + ":" + date.getMinutes();
+	var minutes = date.getMinutes();
+	var hours = date.getHours();
+	if (minutes < 10) {
+		minutes = "0" + minutes;
+	}
+	if (hours < 10) {
+		hours = "0" + hours;
+	}
+	return hours + ":" + minutes;
 }
