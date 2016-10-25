@@ -200,3 +200,12 @@ textarea{
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
 }
+
+.message-timestamp {
+    margin-left: 3px;
+    font-size: 9px;
+}
+
+.inline-block {
+    display: inline-block;
+}

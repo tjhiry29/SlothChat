@@ -66,7 +66,7 @@ $("#message-form").submit(function() {
 		$('#message').val('');
 		return false;
 	}
-	message = {text: text, user_id: session.user_id, nickname: session.nickname, channel_id: session.channel_id}
+	message = {text: text, user_id: session.user_id, nickname: session.nickname, channel_id: session.channel_id, time: Date.now()}
 	socket.emit('new message', message);
 	postUserMessage(message);
 	return false;

@@ -68,14 +68,16 @@ function use(socket, db) {
 
 		client.on('new message', function(message) {
 			//Assign a message id
-			message = {text: message.text, id: message_id++, user_id: message.user_id, nickname: message.nickname, channel_id: message.channel_id}
+			message = {text: message.text, id: message_id++, user_id: message.user_id, nickname: message.nickname, channel_id: message.channel_id, time: message.time}
 			saveMessage(message);
 			socket.to(message.channel_id).emit('new message', message);
 			console.log("new message: %j", message);
 		});
 
 		client.on('request messages', function(session){
-			var messages_to_send = messages.find({channel_id: session.channel_id});
+			var messages_to_send = messages.chain()
+									.find({channel_id: session.channel_id})
+									.limit(20).data();
 			socket.to(client.id).emit('update messages', messages_to_send);
 		});
 
@@ -108,19 +110,19 @@ function setUpDB(db) {
 }
 
 function newUserMessage(nickname, channel_id) {
-	var message = {text: ("User '" + nickname + "' has connected."), id: message_id++, user_id: server_id, nickname: "Server", channel_id: channel_id}
+	var message = {text: ("User '" + nickname + "' has connected."), id: message_id++, user_id: server_id, nickname: "Server", channel_id: channel_id, time: Date.now()}
 	saveMessage(message);
 	return message;
 }
 
 function userDisconnectedMessage(nickname, channel_id) {
-	var message = {text: ("User '" + nickname + "' has disconnected."), id: message_id++, user_id: server_id, nickname: "Server", channel_id: channel_id}
+	var message = {text: ("User '" + nickname + "' has disconnected."), id: message_id++, user_id: server_id, nickname: "Server", channel_id: channel_id, time: Date.now()}
 	saveMessage(message);
 	return message;
 }
 
 function channelJoinedMessage(channel_id){
-	var message = {text: ("You have joined channel " + channel_id), id: message_id++, user_id: server_id, nickname: "Server", channel_id: channel_id}
+	var message = {text: ("You have joined channel " + channel_id), id: message_id++, user_id: server_id, nickname: "Server", channel_id: channel_id, time: Date.now()}
 	return message;
 }
 

@@ -69,13 +69,21 @@ function postUserMessage(message) {
 	$("#message").val('');
 	$("<div>", {
 		class: "message"
-	}).append("<p class='message-from'>"+message.nickname+":</p>").append(marked(message.text)).appendTo(message_container);
-	$(".message-display").scrollTop($(".message-display")[0].scrollHeight)
+	}).append("<p class='message-from inline-block'>"+message.nickname+":</p>")
+	.append("<p class='small message-timestamp inline-block'>"+dateString(message.time)+"</p>").append(marked(message.text)).appendTo(message_container);
+	$(".message-display").scrollTop($(".message-display")[0].scrollHeight);
 }
 
 function postMessage(message) {
 	$("<div>", {
 		class: "message"
-	}).append("<p class='message-from'>"+message.nickname+":</p>").append(marked(message.text)).appendTo(message_container);
-	$(".message-display").scrollTop($(".message-display")[0].scrollHeight)
+	}).append("<p class='message-from inline-block'>"+message.nickname+":</p>")
+	.append("<p class='small message-timestamp inline-block'>"+dateString(message.time)+"</p>").append(marked(message.text)).appendTo(message_container);
+	$(".message-display").scrollTop($(".message-display")[0].scrollHeight);
+}
+
+function dateString(time){
+	var date = new Date();
+	date.setTime(time);
+	return date.getHours() + ":" + date.getMinutes();
 }
