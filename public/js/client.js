@@ -26,10 +26,6 @@ socket.on('error', function(error){
 	presentError(error);
 });
 
-socket.on('update user list', function() {
-	socket.emit('request users', session.channel_id);
-});
-
 socket.on('user list', function(sessions) {
 	clearUserList();
 	users = sessions;

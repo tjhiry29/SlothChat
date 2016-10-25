@@ -45,23 +45,20 @@ function use(socket, db) {
 				saveSession(session);
 				client.join(default_channel);
 				socket.to(client.id).emit('authenticated', session);
-				socket.to(default_channel).emit('update user list');
+				socket.to(default_channel).emit('user list', getUserList(channel_id));
 				socket.to(default_channel).emit('new message', newUserMessage(nickname, default_channel));
 			}
 		});
 
 		client.on('request users', function(channel_id) {
 			//return list of active users.
-			if(channels.find({channel_id: channel_id}) == null) {
-				return;
-			}
-			socket.emit('user list', sessions.find({channel_id: channel_id}))
+			socket.to(channel_id).emit('user list', getUserList(channel_id));
 		});
 
 		client.on('disconnect', function() {
 			var session_to_remove = sessions.find({id: client.id})[0];
 			sessions.remove(session_to_remove);
-			socket.to(session_to_remove.channel_id).emit('update user list');
+			socket.to(session_to_remove.channel_id).emit('user list', getUserList(channel_id));
 			socket.to(session_to_remove.channel_id).emit('new message', userDisconnectedMessage(session_to_remove.nickname, session_to_remove.channel_id))
 			console.log("A user has disconnected %j", session_to_remove);
 		});
@@ -90,12 +87,12 @@ function use(socket, db) {
 			var channel_id_to_leave = session.channel_id;
 			sessions.remove(session);
 			session.channel_id = channel_id_to_join;
-			socket.to(channel_id_to_leave).emit('update users list');
+			socket.to(channel_id_to_leave).emit('user list', getUserList(channel_id_to_leave));
 			socket.to(channel_id_to_leave).emit('new message', userDisconnectedMessage(session.nickname, channel_id_to_leave));
 			saveSession(session);
 			socket.to(client.id).emit('update session', session);
 			client.join(channel_id_to_join);
-			socket.to(channel_id_to_join).emit('update users list');
+			socket.to(channel_id_to_join).emit('user list', getUserList(channel_id_to_join));
 			socket.to(channel_id_to_join).emit('new message', newUserMessage(session.nickname, channel_id_to_join));
 		});
 
@@ -154,6 +151,13 @@ function saveSession(session) {
 
 function saveMessage(message) {
 	messages.insert(message);
+}
+
+function getUserList(channel_id) {
+	if(channels.find({channel_id: channel_id}) == null) {
+				return;
+	}
+	return sessions.find({channel_id: channel_id});
 }
 
 module.exports = {
